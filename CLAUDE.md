@@ -137,7 +137,7 @@ npm run lint         # ESLint 检查
 
 ```bash
 # 1. MySQL 服务（必须运行）
-# 2. iAGS BizServer (端口 3000)
+# 2. iAGS BizServer (端口 4000)
 cd D:\iAGS\tm.iags_biz
 node start.js
 # 3. iAGS PoolingServer (端口 3088, IoT 数据)
@@ -174,7 +174,7 @@ cd D:\iAGS2.0
 npm install
 
 # 2. 启动 iAGS 后端（必须先启动）
-#    MySQL 服务 + BizServer(3000) + PoolingServer(3088)
+#    MySQL 服务 + BizServer(4000) + PoolingServer(3088)
 cd D:\iAGS\tm.iags_biz && node start.js
 
 # 3. 启动 Vue 前端

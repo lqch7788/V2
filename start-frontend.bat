@@ -28,7 +28,7 @@ echo.
 echo ============================================
 echo   Starting Vite Dev Server (port 5173)...
 echo   Frontend: http://localhost:5173
-echo   API Proxy: /app -> http://localhost:3000
+echo   API Proxy: /app -> http://localhost:4000
 echo ============================================
 echo.
 
