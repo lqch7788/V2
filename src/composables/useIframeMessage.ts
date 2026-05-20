@@ -2,7 +2,7 @@
 // 替代 React useEffect + useCallback 模式
 
 import { ref, onMounted, onUnmounted } from 'vue'
-import type { IagsMessage } from '@/types/iframe'
+import type { IagsMessage, TitleUpdatePayload, ErrorPayload } from '@/types/iframe'
 
 export function useIframeMessage(moduleKey: string) {
   const title = ref('')
@@ -19,13 +19,17 @@ export function useIframeMessage(moduleKey: string) {
       case 'IFRAME_READY':
         loading.value = false
         break
-      case 'TITLE_UPDATE':
-        title.value = msg.payload.title
-        breadcrumb.value = msg.payload.breadcrumb || []
+      case 'TITLE_UPDATE': {
+        const p = msg.payload as TitleUpdatePayload
+        title.value = p.title
+        breadcrumb.value = p.breadcrumb || []
         break
-      case 'ERROR':
-        error.value = msg.payload.message
+      }
+      case 'ERROR': {
+        const p = msg.payload as ErrorPayload
+        error.value = p.message
         break
+      }
     }
   }
 

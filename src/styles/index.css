@@ -1,11 +1,11 @@
-// iAGS 2.0 — 全局样式入口
+/* iAGS 2.0 — 全局样式入口 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// === Element Plus 主题变量覆盖 ===
+/* === Element Plus 主题变量覆盖 === */
 :root {
-  // iAGS 品牌色（从 iAGS CoolTaiwan 主题提取）
+  /* iAGS 品牌色（从 iAGS CoolTaiwan 主题提取） */
   --el-color-primary: #16a34a;
   --el-color-primary-light-3: #22c55e;
   --el-color-primary-light-5: #4ade80;
@@ -14,7 +14,7 @@
   --el-color-primary-light-9: #dcfce7;
 }
 
-// === 全局基础样式 ===
+/* === 全局基础样式 === */
 html, body {
   margin: 0;
   padding: 0;
@@ -26,14 +26,12 @@ html, body {
   height: 100%;
 }
 
-// === iframe 容器样式 ===
-.iframe-container {
-  iframe {
-    display: block;
-  }
+/* === iframe 容器样式 === */
+.iframe-container iframe {
+  display: block;
 }
 
-// === 动画 ===
+/* === 动画 === */
 .animate-spin {
   animation: spin 1s linear infinite;
 }

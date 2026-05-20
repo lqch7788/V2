@@ -25,7 +25,7 @@ if %errorlevel% neq 0 (
 
 echo.
 echo ============================================
-echo   Starting iAGS BizServer (port 4000)...
+echo   Starting iAGS BizServer (port 8088)...
 echo ============================================
 start "iAGS-BizServer" cmd /k "cd /d D:\iAGS\tm.iags_biz && echo BizServer starting... && node start.js"
 echo [OK] BizServer launched in separate window.
@@ -43,7 +43,7 @@ echo [OK] PoolingServer launched in separate window.
 echo.
 echo ============================================
 echo   Backend services started.
-echo   BizServer:      http://localhost:4000
+echo   BizServer:      http://localhost:8088
 echo   PoolingServer:  http://localhost:3088
 echo ============================================
 echo.

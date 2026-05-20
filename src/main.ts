@@ -7,7 +7,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import { VueQueryPlugin } from '@tanstack/vue-query'
+import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
 
 import App from './App.vue'
 import { router } from './router'
@@ -30,7 +30,7 @@ app.use(router)
 app.use(ElementPlus, { locale: zhCn })
 
 // 4. TanStack Vue Query（服务端状态缓存）
-app.use(VueQueryPlugin, {
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 2,
@@ -38,6 +38,7 @@ app.use(VueQueryPlugin, {
     },
   },
 })
+app.use(VueQueryPlugin, { queryClient })
 
 // 5. vue-i18n 多语言
 app.use(i18n)

@@ -29,8 +29,8 @@ for /f "tokens=5" %%a in ('netstat -ano ^| find ":5173" ^| find "LISTENING" 2^>n
     taskkill /f /pid %%a 2>nul && echo [OK] Port 5173 released (PID: %%a)
 )
 
-for /f "tokens=5" %%a in ('netstat -ano ^| find ":4000" ^| find "LISTENING" 2^>nul') do (
-    taskkill /f /pid %%a 2>nul && echo [OK] Port 4000 released (PID: %%a)
+for /f "tokens=5" %%a in ('netstat -ano ^| find ":8088" ^| find "LISTENING" 2^>nul') do (
+    taskkill /f /pid %%a 2>nul && echo [OK] Port 8088 released (PID: %%a)
 )
 
 for /f "tokens=5" %%a in ('netstat -ano ^| find ":3088" ^| find "LISTENING" 2^>nul') do (
