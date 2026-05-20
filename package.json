@@ -1,0 +1,44 @@
+{
+  "name": "iags-vue-frontend",
+  "version": "2.0.0",
+  "description": "iAGS 2.0 — 智慧农业管理系统统一前端 (Vue 3 + Element Plus + Pinia)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .vue,.ts",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0",
+    "pinia": "^2.2.0",
+    "element-plus": "^2.9.0",
+    "@element-plus/icons-vue": "^2.3.0",
+    "vue-echarts": "^7.0.0",
+    "echarts": "^5.5.0",
+    "lucide-vue-next": "^0.460.0",
+    "@vueuse/core": "^11.0.0",
+    "@tanstack/vue-query": "^5.60.0",
+    "vue-i18n": "^10.0.0",
+    "pinia-plugin-persistedstate": "^4.0.0",
+    "vue-draggable-plus": "^0.5.0",
+    "date-fns": "^4.1.0",
+    "zod": "^3.23.0",
+    "xlsx": "^0.18.0",
+    "file-saver": "^2.0.0",
+    "jspdf": "^2.5.0",
+    "socket.io-client": "^4.8.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.0",
+    "typescript": "~5.6.0",
+    "vite": "^6.0.0",
+    "vue-tsc": "^2.2.0",
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "eslint": "^9.0.0",
+    "@types/node": "^22.0.0"
+  }
+}

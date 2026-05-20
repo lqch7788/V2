@@ -1,0 +1,36 @@
+// iAGS 2.0 — iframe postMessage 通信 composable
+// 替代 React useEffect + useCallback 模式
+
+import { ref, onMounted, onUnmounted } from 'vue'
+import type { IagsMessage } from '@/types/iframe'
+
+export function useIframeMessage(moduleKey: string) {
+  const title = ref('')
+  const breadcrumb = ref<string[]>([])
+  const loading = ref(true)
+  const error = ref<string | null>(null)
+
+  function handleMessage(event: MessageEvent) {
+    if (event.origin !== window.location.origin) return
+    const msg = event.data as IagsMessage
+    if (msg.source !== 'iags-legacy') return
+
+    switch (msg.type) {
+      case 'IFRAME_READY':
+        loading.value = false
+        break
+      case 'TITLE_UPDATE':
+        title.value = msg.payload.title
+        breadcrumb.value = msg.payload.breadcrumb || []
+        break
+      case 'ERROR':
+        error.value = msg.payload.message
+        break
+    }
+  }
+
+  onMounted(() => window.addEventListener('message', handleMessage))
+  onUnmounted(() => window.removeEventListener('message', handleMessage))
+
+  return { title, breadcrumb, loading, error }
+}
