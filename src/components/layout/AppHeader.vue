@@ -170,17 +170,7 @@ async function handleLogout() {
 .top-menu-item.active {
   color: #fff;
   font-weight: 600;
-}
-.top-menu-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 3px;
-  background: #0b79ff;
-  border-radius: 2px;
+  background: linear-gradient(to bottom, #38bee0, #1c71da); /* 原 iAGS 激活菜单渐变 */
 }
 
 /* ===== 用户区 ===== */

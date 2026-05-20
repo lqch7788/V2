@@ -167,7 +167,7 @@ function getIconUrl(_node: ProcessNode): string {
   width: 250px;
   min-width: 250px;
   background: rgba(50, 66, 78, 1);
-  border-right: 1px solid rgba(255,255,255,0.08);
+  border-right: 2px solid rgb(82, 165, 218); /* 原 iAGS Cool 主题侧边栏右边框 */
   color: #ccc;
   font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
   font-size: 14px;
