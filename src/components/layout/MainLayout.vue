@@ -16,9 +16,13 @@ const topMenuItems = computed(() => {
   return (auth.processTree || []).filter((n: ProcessNode) => n.isAuthorized)
 })
 
-// 当前选中的一级菜单 ProcessAID
+// 当前选中的一级菜单 ProcessAID（优先选有子菜单的）
 const activeTopMenu = computed(() => {
-  // 默认选中第一个
+  // 优先选第一个有子节点的菜单
+  const withChildren = topMenuItems.value.find(
+    (n: ProcessNode) => n.children && n.children.length > 0
+  )
+  if (withChildren) return withChildren.processAID
   return topMenuItems.value[0]?.processAID || ''
 })
 

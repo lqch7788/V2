@@ -69,29 +69,99 @@ export const useAuthStore = defineStore('auth', () => {
         },
       },
     }
+    // 模拟原 iAGS 16 个模块的完整菜单树
     processTree.value = [
       {
-        processOID: 'HOME-OID',
-        processAID: 'home',
-        name: '首页',
-        route: '/home',
-        children: [],
-        authority: {},
-        isAuthorized: true,
+        processOID: 'HOME-OID', processAID: 'home', name: '首页',
+        route: '/home', children: [], authority: {}, isAuthorized: true,
       },
       {
-        processOID: 'LEGACY-OID',
-        processAID: 'legacy',
-        name: '旧版模块',
-        route: '',
-        children: [
-          { processOID: 'MAP', processAID: 'map', name: '站点地图', route: '/legacy/map', children: [], authority: {}, isAuthorized: true },
-          { processOID: 'DEVICE', processAID: 'device', name: '设备监控', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
-          { processOID: 'CURVE', processAID: 'curve', name: '曲线分析', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
-          { processOID: 'CONTROL', processAID: 'control', name: '设备控制', route: '/legacy/control', children: [], authority: {}, isAuthorized: true },
-        ],
-        authority: {},
-        isAuthorized: true,
+        processOID: 'DEVICE-OID', processAID: 'device', name: '设备监控',
+        route: '', children: [
+          { processOID: 'DEV-AIR', processAID: 'device_air', name: '空调系统', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-TEMP', processAID: 'device_temp', name: '温度控制', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-SPRAY', processAID: 'device_spray', name: '喷雾系统', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-WATER', processAID: 'device_water', name: '水肥一体', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-SHADE', processAID: 'device_shade', name: '内遮阳', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-FAN', processAID: 'device_fan', name: '侧窗风机', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-VALVE', processAID: 'device_valve', name: '风阀', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'DEV-ENV', processAID: 'device_env', name: '环境监控', route: '/legacy/device', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'CURVE-OID', processAID: 'curve', name: '曲线分析',
+        route: '', children: [
+          { processOID: 'CUR-REALTIME', processAID: 'curve_realtime', name: '实时曲线', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CUR-HISTORY', processAID: 'curve_history', name: '历史曲线', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CUR-FERT', processAID: 'curve_fert', name: '施肥曲线', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CUR-YIELD', processAID: 'curve_yield', name: '产量曲线', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CUR-ENERGY', processAID: 'curve_energy', name: '能耗曲线', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CUR-DEVRUN', processAID: 'curve_devrun', name: '设备运行', route: '/legacy/curve', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'CONTROL-OID', processAID: 'control', name: '设备控制',
+        route: '', children: [
+          { processOID: 'CTL-SMART', processAID: 'control_smart', name: '智能控制', route: '/legacy/control', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CTL-MONITOR', processAID: 'control_monitor', name: '运行监测', route: '/legacy/control', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'CTL-MATRIX', processAID: 'control_matrix', name: '矩阵控制', route: '/legacy/control', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'REPORT-OID', processAID: 'report', name: '报表中心',
+        route: '', children: [
+          { processOID: 'RPT-DAY', processAID: 'report_day', name: '日报表', route: '/legacy/report', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'RPT-MONTH', processAID: 'report_month', name: '月报表', route: '/legacy/report', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'RPT-CUSTOM', processAID: 'report_custom', name: '自定义报表', route: '/legacy/report', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'WARNING-OID', processAID: 'warning', name: '告警管理',
+        route: '', children: [
+          { processOID: 'WARN-CURRENT', processAID: 'warning_current', name: '当前告警', route: '/legacy/warning', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'WARN-HISTORY', processAID: 'warning_history', name: '历史告警', route: '/legacy/warning', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'ENERGY-OID', processAID: 'energy', name: '能耗管理',
+        route: '', children: [
+          { processOID: 'ENG-ELEC', processAID: 'energy_elec', name: '用电能耗', route: '/legacy/energy', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'ENG-WATER', processAID: 'energy_water', name: '用水能耗', route: '/legacy/energy', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'RESUME-OID', processAID: 'resume', name: '履历管理',
+        route: '', children: [
+          { processOID: 'RSM-DEVICE', processAID: 'resume_device', name: '设备履历', route: '/legacy/resume', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'RSM-CROP', processAID: 'resume_crop', name: '种植履历', route: '/legacy/resume', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'APP-OID', processAID: 'application', name: '智能应用',
+        route: '', children: [
+          { processOID: 'APP-FERT', processAID: 'app_fert', name: '智能施肥', route: '/legacy/application', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'APP-IRR', processAID: 'app_irr', name: '智能灌溉', route: '/legacy/application', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'CAMERA-OID', processAID: 'camera', name: '视频监控',
+        route: '', children: [
+          { processOID: 'CAM-LIVE', processAID: 'camera_live', name: '实时视频', route: '/legacy/camera', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'MORE-OID', processAID: 'more', name: '更多设置',
+        route: '', children: [
+          { processOID: 'MORE-PARAM', processAID: 'more_param', name: '参数设置', route: '/legacy/more', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'MORE-AREA', processAID: 'more_area', name: '温室区域', route: '/legacy/more', children: [], authority: {}, isAuthorized: true },
+          { processOID: 'MORE-CROP', processAID: 'more_crop', name: '作物管理', route: '/legacy/more', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
+      },
+      {
+        processOID: 'SYSTEM-OID', processAID: 'systemset', name: '系统设置',
+        route: '', children: [
+          { processOID: 'SYS-CONFIG', processAID: 'sys_config', name: '系统配置', route: '/legacy/systemset', children: [], authority: {}, isAuthorized: true },
+        ], authority: {}, isAuthorized: true,
       },
     ]
   }
