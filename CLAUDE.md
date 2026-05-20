@@ -162,42 +162,37 @@ Vite proxy 将自动把 `/app` 请求转发到 iAGS BizServer。
 - `git status`、`git diff`、`git log`、`git add`、`git commit`（需用户确认）
 - `npm install`、`npm run dev`、`npm run build`
 
-## 📋 任务队列（进入项目后按顺序执行）
+## 📋 任务队列
 
-> **当前阶段**：Vue 3 项目骨架已搭建（30个文件），下一步是安装依赖 + 验证后端联通。
+> **当前阶段**：Vue 3 项目骨架完成，开发模式可运行（dev mode bypass），规划文档已修正。下一步：接入真实 iAGS 后端验证 broker API，然后开始模块改造。
 
-### 🔴 第一步：环境验证（P0 — 立即执行）
+### 🔴 第一步：验证后端联通（P0 — 下次启动后端后执行）
 
 ```bash
-# 1. 安装依赖
-cd D:\iAGS2.0
-npm install
-
-# 2. 启动 iAGS 后端（必须先启动）
+# 1. 启动 iAGS 后端（必须先启动）
 #    MySQL 服务 + BizServer(8088) + PoolingServer(3088)
 cd D:\iAGS\tm.iags_biz && node start.js
 
-# 3. 启动 Vue 前端
+# 2. 启动 Vue 前端（已在 dev mode 下可独立运行）
 cd D:\iAGS2.0
 npm run dev
 # → http://localhost:5173
 ```
 
-**验证清单**：
-- [ ] `npm install` 无错误
-- [ ] `npm run dev` 启动成功
-- [ ] 浏览器访问 http://localhost:5173 显示登录页
-- [ ] 输入 iAGS 用户名/密码 → 登录成功 → Cookie 正确设置
+**待验证清单**：
+- [ ] iAGS 后端启动成功（BizServer 8088 + PoolingServer 3088）
+- [ ] 登录页用真实 iAGS 账号登录成功（目前 dev mode 任意用户名直接登录）
+- [ ] Cookie `yujiang-iAGS-x-access-token` 正确设置
 - [ ] brokerClient 调通（F12 Network 查看 broker API 返回 200）
-- [ ] 侧边栏菜单从 iAGS processTree 正确渲染
+- [ ] 侧边栏菜单从 iAGS processTree 正确渲染（目前用 dev mock 数据）
 
 ### 🟡 第二步：iAGS 旧模块 Vue 3 改造（P1 — 核心工作）
 
-按照 `docs/升级为VUE方案V1.0.md` §19 优先级逐个改造：
+按照 `升级为VUE方案V1.0.md` §19 优先级逐个改造：
 
 | 优先级 | 模块 | 工期 | 说明 |
 |--------|------|------|------|
-| **P0** | 认证 + home(仪表盘) | 1-2周 | 登录已实现，完成首页 |
+| **P0** | 认证 + home(仪表盘) | 1-2周 | 登录已实现，完成首页替代当前占位页 |
 | **P1** | device + control + curve | 8-12周 | 核心监控，使用频率最高 |
 | **P1** | administration | 3-4周 | 种植管理 — 后续由 V1.1 替换 |
 | **P2** | report/warning/resume/energy | 4-6周 | 报表告警履历能耗 |
@@ -206,40 +201,38 @@ npm run dev
 | **P4** | 3D/intelligentcontrol | 后续评估 | 技术难度极高 |
 
 **每个模块改造流程**：
-1. 读取 iAGS 旧 EJS 页面，理解业务逻辑
-2. 创建 Vue SFC 页面 + Element Plus 组件
-3. 如果 EJS 中有 EasyUI datagrid → 改为 `el-table`
-4. 如果 EJS 中有 Highcharts 图表 → 改为 `vue-echarts`
-5. 如果旧页面依赖 Socket.IO 实时数据 → 使用 `useRealtimeBridge`
-6. 创建 Pinia Store（通过 brokerClient 调用 broker API）
-7. `npm run dev` 浏览器验证功能正常
-8. 提交代码
+1. 读取 iAGS 旧 EJS 页面（`D:\iAGS\tm.iags_web\`），理解业务逻辑
+2. 创建 Vue SFC 页面 + Element Plus 组件，**严格复刻原 iAGS 布局样式**
+3. EasyUI datagrid → `el-table`，Highcharts → `vue-echarts`
+4. 如需实时数据 → 使用 `useRealtimeBridge` composable
+5. 创建 Pinia Store（通过 brokerClient 调用 broker API）
+6. 浏览器验证功能 + 样式对比原系统
+7. 提交代码
 
 ### 🟢 第三步：V1.1 "生产管理"模块整合（P2 — 等 iAGS 改造完成后）
 
 **触发条件**：iAGS 16个旧模块全部 Vue 3 改造完成且验证通过后
 
-**整合内容**：
-- V1.1 的作物管理、计划管理、库存管理、人工管理、生产汇总、审批管理
-- V1.1 的仪表盘、系统设置、权限管理
-- 参考 `docs/升级为VUE方案V1.0.md` §8 迁移策略
-
 **⚠️ 在此之前不要复制 V1.1 任何代码文件到 iAGS2.0！**
 
-### ✅ 已完成
+### ✅ 已完成（截至 2026-05-20）
 
-- [x] Vue 3 项目骨架（package.json、vite.config.ts、tsconfig.json）
+- [x] Vue 3 项目骨架（package.json、vite.config.ts、tsconfig.json、postcss.config.js、tailwind.config.js）
 - [x] brokerClient 实现（90行，对接 iAGS broker API）
-- [x] useAuthStore（Pinia，对接 iAGS Cookie 认证）
+- [x] useAuthStore（Pinia，dev mode bypass + iAGS Cookie 认证双模式）
 - [x] Vue Router 路由配置 + 认证守卫
-- [x] MainLayout + Sidebar + Header 布局
-- [x] LoginPage 登录页
-- [x] IframeContainer 旧模块过渡容器
-- [x] LegacyPage 旧模块 iframe 包装页
-- [x] postMessage 通信类型定义
-- [x] Socket.IO 实时数据桥接
+- [x] MainLayout + AppSidebar + AppHeader 布局（精确复刻 iAGS Cool 主题）
+- [x] LoginPage 登录页（dev mode 直接登录）
+- [x] IframeContainer + LegacyPage 旧模块过渡方案
+- [x] postMessage 通信类型定义 + useIframeMessage composable
+- [x] Socket.IO 实时数据桥接（useRealtimeBridge）
 - [x] vue-i18n 多语言基础配置
 - [x] TanStack Vue Query 缓存策略常量
+- [x] Element Plus 主题色覆盖为 iAGS Cool 蓝（#3dcaed）
+- [x] Tailwind CSS v3 + PostCSS 配置（非 v4 @tailwindcss/vite）
+- [x] 内联 SVG 图标（Logo/Plus/Minus/Dot），零后端静态资源依赖
+- [x] 升级为VUE方案V1.0.md 文档全面修正（端口8088、Cool主题规格等）
+- [x] 构建零错误验证（vue-tsc + vite build 通过）
 - [x] Git 初始化 + 首次提交已推送 GitHub
 
 ## 📖 关键文档
