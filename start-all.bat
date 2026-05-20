@@ -1,92 +1,85 @@
 @echo off
-chcp 65001 >nul
-title iAGS 2.0 — 全部服务
+title iAGS 2.0 - All Services
 
 echo.
-echo ╔══════════════════════════════════════════════╗
-echo ║  iAGS 2.0 — 启动全部服务 (后端 + 前端)    ║
-echo ╚══════════════════════════════════════════════╝
+echo ============================================
+echo   iAGS 2.0 - Start All Services
+echo ============================================
 echo.
 
 cd /d "D:\iAGS2.0"
 
-REM ===== 检查前端依赖 =====
+REM ===== Check frontend deps =====
 if not exist "node_modules\" (
-    echo 🔧 首次运行，正在安装前端依赖...
+    echo [Setup] Installing frontend dependencies...
     call npm install
     if %errorlevel% neq 0 (
-        echo ❌ 依赖安装失败
+        echo [FAIL] Dependency install failed.
         pause
         exit /b 1
     )
-    echo ✅ 依赖安装完成
+    echo [OK] Dependencies installed.
     echo.
 )
 
-REM ===== 检查 MySQL =====
-echo [1/3] 检查 MySQL 服务...
+REM ===== Check MySQL =====
+echo [1/3] Checking MySQL service...
 sc query MySQL 2>nul | find "RUNNING" >nul
 if %errorlevel% neq 0 (
     sc query MySQL80 2>nul | find "RUNNING" >nul
     if %errorlevel% neq 0 (
-        echo ⚠️  MySQL 似乎未运行
-        echo    iAGS 后端需要 MySQL 才能正常启动
-        echo    数据库: 127.0.0.1:3306 / iags / root / 123456
+        echo [WARN] MySQL might not be running.
+        echo        DB: 127.0.0.1:3306 / iags / root / 123456
         echo.
-        choice /c YN /m "是否继续启动 (后端可能报错)?"
+        choice /c YN /m "Continue anyway (backend may fail)?"
         if errorlevel 2 exit /b 0
     ) else (
-        echo ✅ MySQL80 运行中
+        echo [OK] MySQL80 is running.
         echo.
     )
 ) else (
-    echo ✅ MySQL 运行中
+    echo [OK] MySQL is running.
     echo.
 )
 
-REM ===== 启动后端 =====
-echo [2/3] 启动 iAGS 后端服务...
+REM ===== Start backend =====
+echo [2/3] Starting iAGS backend...
 
-REM 启动 BizServer (端口 3000)
-start "iAGS-BizServer" cmd /k "cd /d D:\iAGS\tm.iags_biz && echo iAGS BizServer (端口3000) && echo. && node start.js"
-echo   ✅ BizServer 窗口已打开 (端口 3000)
+start "iAGS-BizServer" cmd /k "cd /d D:\iAGS\tm.iags_biz && echo iAGS BizServer (port 3000) && echo. && node start.js"
+echo   [OK] BizServer launched (port 3000)
 
-REM 启动 PoolingServer (端口 3088)
-start "iAGS-PoolingServer" cmd /k "cd /d D:\iAGS\tm.iAGS.poolingServer && echo iAGS PoolingServer (端口3088) && echo. && node start.js"
-echo   ✅ PoolingServer 窗口已打开 (端口 3088)
+start "iAGS-PoolingServer" cmd /k "cd /d D:\iAGS\tm.iAGS.poolingServer && echo iAGS PoolingServer (port 3088) && echo. && node start.js"
+echo   [OK] PoolingServer launched (port 3088)
 
-echo ── 等待后端初始化 (8秒)...
+echo   Waiting for backend init (8s)...
 timeout /t 8 /nobreak >nul
 echo.
 
-REM ===== 启动前端 =====
-echo [3/3] 启动 Vue 3 前端...
-start "iAGS-VueFrontend" cmd /k "cd /d D:\iAGS2.0 && echo iAGS 2.0 Vue 3 前端 (端口5173) && echo. && npm run dev"
+REM ===== Start frontend =====
+echo [3/3] Starting Vue 3 frontend...
+start "iAGS-VueFrontend" cmd /k "cd /d D:\iAGS2.0 && echo iAGS 2.0 Vue 3 Frontend (port 5173) && echo. && npm run dev"
+echo   [OK] Frontend launched (port 5173)
 
-echo   ✅ 前端窗口已打开 (端口 5173)
-
-echo ── 等待 Vite 启动 (5秒)...
+echo   Waiting for Vite startup (5s)...
 timeout /t 5 /nobreak >nul
 
-REM ===== 打开浏览器 =====
-echo ── 打开浏览器...
+REM ===== Open browser =====
+echo   Opening browser...
 start http://localhost:5173
 
 echo.
-echo ╔══════════════════════════════════════════════╗
-echo ║          全部服务启动完成！                ║
-echo ╠══════════════════════════════════════════════╣
-echo ║  前端:  http://localhost:5173              ║
-echo ║  后端:  http://localhost:3000              ║
-echo ║  IoT:   http://localhost:3088              ║
-echo ╠══════════════════════════════════════════════╣
-echo ║  浏览器已自动打开，请登录 iAGS 账号        ║
-echo ╚══════════════════════════════════════════════╝
+echo ============================================
+echo        All services started!
+echo ============================================
+echo   Frontend:  http://localhost:5173
+echo   Backend:   http://localhost:3000
+echo   IoT:       http://localhost:3088
+echo ============================================
+echo   Browser opened. Login with iAGS account.
+echo ============================================
 echo.
-echo ┌──────────────────────────────────────────────┐
-echo │  各服务运行在独立窗口中                      │
-echo │  关闭窗口即可停止对应服务                    │
-echo │  或运行 stop-all.bat 关闭全部              │
-echo └──────────────────────────────────────────────┘
+echo   Each service runs in its own window.
+echo   Close a window to stop that service,
+echo   or run stop-all.bat to stop everything.
 echo.
 pause

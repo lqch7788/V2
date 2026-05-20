@@ -1,53 +1,51 @@
 @echo off
-chcp 65001 >nul
-title iAGS 2.0 — 后端服务
+title iAGS 2.0 - Backend
 
 echo.
-echo ╔══════════════════════════════════════════════╗
-echo ║   iAGS 2.0 — 启动后端服务                  ║
-echo ╚══════════════════════════════════════════════╝
+echo ============================================
+echo   iAGS 2.0 - Start Backend Services
+echo ============================================
 echo.
 
-REM ===== 检查 MySQL =====
-echo [检查] MySQL 服务状态...
+REM Check MySQL
+echo [Check] MySQL service...
 sc query MySQL 2>nul | find "RUNNING" >nul
 if %errorlevel% neq 0 (
     sc query MySQL80 2>nul | find "RUNNING" >nul
     if %errorlevel% neq 0 (
-        echo ⚠️  MySQL 似乎未运行，请先启动 MySQL 服务
-        echo    数据库: 127.0.0.1:3306 / iags / root / 123456
+        echo [WARN] MySQL might not be running.
+        echo        DB: 127.0.0.1:3306 / iags / root / 123456
         echo.
     ) else (
-        echo ✅ MySQL80 运行中
+        echo [OK] MySQL80 is running.
     )
 ) else (
-    echo ✅ MySQL 运行中
+    echo [OK] MySQL is running.
 )
 
 echo.
-echo ═══════════════════════════════════════════════
-echo   启动 iAGS BizServer (端口 3000)...
-echo ═══════════════════════════════════════════════
-start "iAGS-BizServer" cmd /k "cd /d D:\iAGS\tm.iags_biz && echo BizServer 启动中... && node start.js"
-echo ✅ BizServer 已在独立窗口启动
+echo ============================================
+echo   Starting iAGS BizServer (port 3000)...
+echo ============================================
+start "iAGS-BizServer" cmd /k "cd /d D:\iAGS\tm.iags_biz && echo BizServer starting... && node start.js"
+echo [OK] BizServer launched in separate window.
 
-REM 等待 BizServer 初始化
-echo ── 等待 BizServer 初始化 (5秒)...
+echo   Waiting for BizServer init (5s)...
 timeout /t 5 /nobreak >nul
 
 echo.
-echo ═══════════════════════════════════════════════
-echo   启动 iAGS PoolingServer (端口 3088)...
-echo ═══════════════════════════════════════════════
-start "iAGS-PoolingServer" cmd /k "cd /d D:\iAGS\tm.iAGS.poolingServer && echo PoolingServer 启动中... && node start.js"
-echo ✅ PoolingServer 已在独立窗口启动
+echo ============================================
+echo   Starting iAGS PoolingServer (port 3088)...
+echo ============================================
+start "iAGS-PoolingServer" cmd /k "cd /d D:\iAGS\tm.iAGS.poolingServer && echo PoolingServer starting... && node start.js"
+echo [OK] PoolingServer launched in separate window.
 
 echo.
-echo ═══════════════════════════════════════════════
-echo   后端服务启动完成！
+echo ============================================
+echo   Backend services started.
 echo   BizServer:      http://localhost:3000
 echo   PoolingServer:  http://localhost:3088
-echo ═══════════════════════════════════════════════
+echo ============================================
 echo.
-echo 提示: 输入 Ctrl+C 可停止各窗口的服务
+echo Close each window to stop the service, or run stop-all.bat
 pause
